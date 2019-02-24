@@ -2,7 +2,7 @@ import { Document } from "../entity/document";
 import * as fs from 'fs';
 //import { decryptDocument } from "../libs/utils";
 
-export default async function getDocument(req: any, res: any) {
+export default async function getDocumentFile(req: any, res: any) {
     const docID: number = req.params.docID;
     if(docID == null) {
         res.status(400).send();
