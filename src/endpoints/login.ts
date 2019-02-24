@@ -23,7 +23,8 @@ export default async function login(req: Request, res: Response) {
         console.log(`User ${username} is now logged in.`);
 
         const jwtBody = {
-            userID: user.id
+            id: user.id,
+            username: user.username
         }
         const jsonWebToken = jwt.sign(jwtBody, config.secretJWT, {expiresIn: '7d'});
         res.status(200).send({
