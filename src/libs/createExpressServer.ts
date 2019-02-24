@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as http from 'http';
 
-export function createExpressServer() {
+export default function createExpressServer() {
     const app = express();
     const server = http.createServer(app);
     app.use(bodyParser.json());

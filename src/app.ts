@@ -2,7 +2,7 @@ import { createConnection } from 'typeorm';
 import * as fs from 'fs';
 import { insertDummyData } from './dummyData';
 import { registerExpressRoutes } from './libs/registerExpressRoutes';
-import { createExpressServer } from './libs/createExpressServer';
+import createExpressServer from './libs/createExpressServer';
 
 async function run() {
     console.log("DocSort is starting, please stand by ...");

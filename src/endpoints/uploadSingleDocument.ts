@@ -5,10 +5,8 @@ import { User } from "../entity/user";
 import { Tag } from "../entity/tag";
 import { getNewPrimaryNumber } from "../libs/getNewPrimaryNumber";
 import { getUserIDFromJWT } from "../libs/getUserIDFromJWT";
-import { extractFileExtension } from "../libs/extractFileExtension";
-import { encryptDocument } from "../libs/encryptDocument";
-import { createRandomString } from "../libs/createRandomString";
 import { generateFilePath } from "../libs/generateFilePath";
+import extractFileExtension from "../libs/extractFileExtension";
 
 interface IRequestTag {
     name: string;
@@ -37,18 +35,18 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
 
         const requestBody: IRequestBody = req.body;
         const file: Express.Multer.File = req.file;
+        console.log('singel:',req.body);
 
         const document: Document = new Document();
         document.primaryNumber = nextPrimaryNumber;
         document.secondaryNumber = 0;
 
         // Early saving, so we can access the "id" and the "primaryNumber" is reserved
-        await document.save();
         document.title = requestBody.title;
         document.note = requestBody.note;
         document.user = user;
         // CRYPT: document.iv = iv;
-        document.mimeType = req.file.mimetype;
+        document.mimeType = file.mimetype;
         document.ocrEnabled = false;
         document.ocrFinished = false;
         document.ocrText = null;
