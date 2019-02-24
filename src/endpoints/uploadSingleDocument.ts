@@ -18,7 +18,7 @@ interface IRequestTag {
 interface IRequestBody {
     title: string;
     note: string;
-    tags: Array<IRequestTag|number>;
+    tags: string;
 }
 
 export default async function uploadSingleDocument(req: Request, res: Response) {
@@ -35,7 +35,7 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
 
         const requestBody: IRequestBody = req.body;
         const file: Express.Multer.File = req.file;
-        console.log('singel:',req.body);
+        console.log('single:',req.body);
 
         const document: Document = new Document();
         document.primaryNumber = nextPrimaryNumber;
@@ -54,8 +54,9 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
 
         // Setting up TAGs
         let documentTags = await document.tags;
-        if(requestBody.tags != null) {
-            for (const tag of requestBody.tags) {
+        const givenTags = JSON.parse(requestBody.tags);
+        if(givenTags != null) {
+            for (const tag of givenTags) {
                 if(typeof tag == "number") {
                     let existingTag = await Tag.findOne({ where: { id: tag }});
                     if(existingTag != null) {
@@ -63,10 +64,14 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
                     }
                 } else {
                     let newTag = new Tag();
+                    console.log("debug-tag=" + JSON.stringify(tag));
                     newTag.name = tag.name;
-                    newTag.logo = tag.logo;
+                    /*newTag.logo = tag.logo;
                     newTag.colorBackground = tag.colorBackground;
-                    newTag.colorForeground = tag.colorForeground;
+                    newTag.colorForeground = tag.colorForeground;*/
+                    newTag.logo = "test-logo";
+                    newTag.colorBackground = "test-color";
+                    newTag.colorForeground = "test-color2";
                     let tagUser = await newTag.user;
                     tagUser = user;
                     await newTag.save();
