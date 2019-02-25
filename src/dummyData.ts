@@ -46,9 +46,9 @@ export async function insertDummyData() {
     doc1.note = "Rechnung von den Flitterwochen zu den Malediven (Fushifaru) Ende 2019";
     // CRYPT: doc1.iv = "0A2wp3fgzhWquOlz";
 
-    let tagRechnung = await Tag.create({name: "Rechnung"}).save();
-    let tagReise = await Tag.create({name: "Reise"}).save();
-    let tagMahnung = await Tag.create({name: "Mahnung"}).save();
+    let tagRechnung = await Tag.create({name: "Rechnung", colorBackground: "#1c1c1c", colorForeground: '#ffffff'}).save();
+    let tagReise = await Tag.create({name: "Reise", colorBackground: "#FFC107", colorForeground: '#ffffff'}).save();
+    let tagMahnung = await Tag.create({name: "Mahnung", colorBackground: "#673AB7", colorForeground: '#ffffff'}).save();
 
     let doc1Tags = [];
     doc1Tags.push(tagRechnung, tagReise);

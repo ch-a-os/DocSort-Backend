@@ -12,7 +12,7 @@ export default async function getDocumentFile(req: any, res: any) {
     const doc: Document = await Document.findOne({ where: { uid: docID }, relations: ['tags']});
     //const secondaryNumber = doc.secondaryNumber == null ? 0: doc.secondaryNumber;
     //const encryptedDocument = readFileSync(`./uploads/${doc.uid}_${doc.primaryNumber}.${secondaryNumber}.dse`);
-    const docFile = fs.readFileSync(`./uploads/${doc.uid}_${doc.primaryNumber}.${doc.secondaryNumber}.dse`);
+    const docFile = fs.readFileSync(`./uploads/${doc.uid}_${doc.primaryNumber}.${doc.secondaryNumber}.${doc.fileExtension}`);
     //const finalDoc = decryptDocument(encryptedDocument, "123Secret", doc.iv);
     res.status(200).send(docFile);
 }
