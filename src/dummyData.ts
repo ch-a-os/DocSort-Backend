@@ -27,7 +27,7 @@ export async function insertDummyData() {
             salt: salt
         }).save();
     }
-    const user: User = await User.findOne({where: {username: "Mondei1"}});
+    let user: User = await User.findOne({where: {username: "Mondei1"}});
     // 1. save document
     let highestDoc = await Document.findOne({
         select: ["primaryNumber"],
@@ -44,17 +44,14 @@ export async function insertDummyData() {
     doc1.fileExtension = "png";
     doc1.title = "Rechnung TUI Flitterwochen 2019";
     doc1.note = "Rechnung von den Flitterwochen zu den Malediven (Fushifaru) Ende 2019";
-    // CRYPT: doc1.iv = "0A2wp3fgzhWquOlz";
 
     let tagRechnung = await Tag.create({name: "Rechnung", colorBackground: "#1c1c1c", colorForeground: '#ffffff'}).save();
     let tagReise = await Tag.create({name: "Reise", colorBackground: "#FFC107", colorForeground: '#ffffff'}).save();
     let tagMahnung = await Tag.create({name: "Mahnung", colorBackground: "#673AB7", colorForeground: '#ffffff'}).save();
 
-    let doc1Tags = [];
-    doc1Tags.push(tagRechnung, tagReise);
+    doc1.tags = new Array<Tag>();
+    doc1.tags.push(tagRechnung, tagReise);
 
-    let tags1 = await doc1.tags;
-    tags1 = doc1Tags;
     doc1.mimeType = "image/png";
     await doc1.save();
 
@@ -66,12 +63,8 @@ export async function insertDummyData() {
     doc2.title = "Mahnung TUI";
     doc2.note = "Mahnung von TUI von den Flitterwochen zu den Malediven (Fushifaru) Ende 2019";
     doc2.user = user;
-    // CRYPT: doc2.iv = "yUlW6tqGiIG4Ms1K";
-    let doc2Tags = [];
-    doc2Tags.push(tagRechnung);
-    doc2Tags.push(tagMahnung);
-    let tags2 = await doc2.tags;
-    tags2 = doc2Tags;
+    doc2.tags = new Array<Tag>();
+    doc2.tags.push(tagRechnung, tagMahnung);
     doc2.mimeType = "image/png";
     await doc2.save();
 }

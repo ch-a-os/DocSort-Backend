@@ -21,6 +21,6 @@ export class User extends BaseEntity {
     documents: Document[];
 
     @OneToMany(type => Tag, tag => tag.user)
-    tags: Promise<Tag[]>;
+    tags: Tag[];
 
 }

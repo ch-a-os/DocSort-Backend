@@ -26,7 +26,7 @@ export default async function login(req: Request, res: Response) {
             id: user.id,
             username: user.username
         }
-        const jsonWebToken = jwt.sign(jwtBody, config.secretJWT, {expiresIn: '7d'});
+        const jsonWebToken = jwt.sign(jwtBody, config.secretJWT, { expiresIn: '7d' });
         res.status(200).send({
             jwt: jsonWebToken
         });

@@ -1,6 +1,6 @@
 import { Document } from "../entity/document";
 import * as fs from 'fs';
-//import { decryptDocument } from "../libs/utils";
+import { generateFilePath } from "../libs/generateFilePath";
 
 export default async function getDocumentFile(req: any, res: any) {
     const docID: number = req.params.docID;
@@ -9,10 +9,7 @@ export default async function getDocumentFile(req: any, res: any) {
         return;
     }
 
-    const doc: Document = await Document.findOne({ where: { uid: docID }, relations: ['tags']});
-    //const secondaryNumber = doc.secondaryNumber == null ? 0: doc.secondaryNumber;
-    //const encryptedDocument = readFileSync(`./uploads/${doc.uid}_${doc.primaryNumber}.${secondaryNumber}.dse`);
-    const docFile = fs.readFileSync(`./uploads/${doc.uid}_${doc.primaryNumber}.${doc.secondaryNumber}.${doc.fileExtension}`);
-    //const finalDoc = decryptDocument(encryptedDocument, "123Secret", doc.iv);
+    const doc: Document = await Document.findOne({ where: { uid: docID }});
+    const docFile = fs.readFileSync(generateFilePath(doc));
     res.status(200).send(docFile);
 }

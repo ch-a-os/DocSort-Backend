@@ -53,14 +53,14 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         document.fileExtension = extractFileExtension(req.file.originalname);
 
         // Setting up TAGs
-        let documentTags = await document.tags;
+        //let documentTags = await document.tags;
         const givenTags = JSON.parse(requestBody.tags); // Can be like IRequestTag to create new tag or just an ID of existing tag
         if(givenTags != null) {
             for (const tag of givenTags) {
                 if(typeof tag == "number") {
                     let existingTag = await Tag.findOne({ where: { id: tag }});
                     if(existingTag != null) {
-                        documentTags.push(existingTag);
+                        document.tags.push(existingTag);
                     }
                 } else {
                     let newTag = new Tag();
@@ -72,10 +72,9 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
                     newTag.logo = "test-logo";
                     newTag.colorBackground = "test-color";
                     newTag.colorForeground = "test-color2";
-                    let tagUser = await newTag.user;
-                    tagUser = user;
+                    newTag.user = user;
                     await newTag.save();
-                    documentTags.push(newTag);
+                    document.tags.push(newTag);
                 }
             }
         }
@@ -83,8 +82,6 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         await document.save();
 
         const filePath = generateFilePath(document);
-        // Encrypt document
-        // CRYPT: fs.writeFileSync(`./uploads/${document.uid}_${primaryNumber}.0.dse`, encryptDocument(req.file.buffer, "123Secret", iv));
         fs.writeFileSync(filePath, req.file.buffer);
         
         console.log(`file written: ${filePath}`);

@@ -21,9 +21,9 @@ export class Tag extends BaseEntity {
     logo?: string;
 
     @ManyToMany(type => Document, document => document.tags)
-    documents: Promise<Document[]>;
+    documents: Document[];
 
     @ManyToOne(type => User, user => user.tags)
-    user: Promise<User>;
+    user: User;
 
 }
