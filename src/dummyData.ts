@@ -47,7 +47,7 @@ export async function insertDummyData() {
 
     let tagRechnung = await Tag.create({name: "Rechnung", colorBackground: "#1c1c1c", colorForeground: '#ffffff', user: user}).save();
     let tagReise = await Tag.create({name: "Reise", colorBackground: "#FFC107", colorForeground: '#ffffff', user: user}).save();
-    let tagMahnung = await Tag.create({name: "Mahnung", user: user}).save();
+    let tagMahnung = await Tag.create({name: "Mahnung"}).save();
 
     doc1.tags = new Array<Tag>();
     doc1.tags.push(tagRechnung, tagReise);

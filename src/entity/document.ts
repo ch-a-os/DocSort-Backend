@@ -23,7 +23,7 @@ export class Document extends BaseEntity {
     @Column({ nullable: true })
     note?: string;
 
-    @ManyToOne(type => User, user => user.documents)
+    @ManyToOne(type => User, user => user.documents, {nullable: false})
     user: User;
 
     @ManyToMany(type => Tag, tag => tag.documents)
