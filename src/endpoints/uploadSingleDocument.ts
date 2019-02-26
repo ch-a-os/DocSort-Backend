@@ -54,7 +54,7 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
 
         // Setting up TAGs
         //let documentTags = await document.tags;
-        const givenTags = JSON.parse(requestBody.tags); // Can be like IRequestTag to create new tag or just an ID of existing tag
+        const givenTags: Array<IRequestTag|number> = JSON.parse(requestBody.tags); // Can be like IRequestTag to create new tag or just an ID of existing tag
         if(givenTags != null) {
             for (const tag of givenTags) {
                 if(typeof tag == "number") {
@@ -69,9 +69,15 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
                     /*newTag.logo = tag.logo;
                     newTag.colorBackground = tag.colorBackground;
                     newTag.colorForeground = tag.colorForeground;*/
-                    newTag.logo = "test-logo";
-                    newTag.colorBackground = "test-color";
-                    newTag.colorForeground = "test-color2";
+                    if(tag.logo != null) {
+                        newTag.logo = tag.logo;
+                    }
+                    if(tag.colorBackground != null) {
+                        newTag.colorBackground = tag.colorBackground;
+                    }
+                    if(tag.colorForeground != null) {
+                        newTag.colorForeground = tag.colorForeground;
+                    }
                     newTag.user = user;
                     await newTag.save();
                     document.tags.push(newTag);

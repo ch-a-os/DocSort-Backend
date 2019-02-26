@@ -45,9 +45,9 @@ export async function insertDummyData() {
     doc1.title = "Rechnung TUI Flitterwochen 2019";
     doc1.note = "Rechnung von den Flitterwochen zu den Malediven (Fushifaru) Ende 2019";
 
-    let tagRechnung = await Tag.create({name: "Rechnung", colorBackground: "#1c1c1c", colorForeground: '#ffffff'}).save();
-    let tagReise = await Tag.create({name: "Reise", colorBackground: "#FFC107", colorForeground: '#ffffff'}).save();
-    let tagMahnung = await Tag.create({name: "Mahnung", colorBackground: "#673AB7", colorForeground: '#ffffff'}).save();
+    let tagRechnung = await Tag.create({name: "Rechnung", colorBackground: "#1c1c1c", colorForeground: '#ffffff', user: user}).save();
+    let tagReise = await Tag.create({name: "Reise", colorBackground: "#FFC107", colorForeground: '#ffffff', user: user}).save();
+    let tagMahnung = await Tag.create({name: "Mahnung", user: user}).save();
 
     doc1.tags = new Array<Tag>();
     doc1.tags.push(tagRechnung, tagReise);

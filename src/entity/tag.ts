@@ -11,10 +11,10 @@ export class Tag extends BaseEntity {
     @Column()
     name: string;
 
-    @Column({ nullable: true })
+    @Column({ default: "#000000" })
     colorBackground?: string;
 
-    @Column({ nullable: true })
+    @Column({ default: "#ffffff" })
     colorForeground?: string;
 
     @Column({ nullable: true })
