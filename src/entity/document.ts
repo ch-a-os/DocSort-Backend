@@ -1,4 +1,4 @@
-import { BeforeInsert, UpdateDateColumn,  Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, JoinTable, ManyToOne, CreateDateColumn } from "typeorm";
+import { UpdateDateColumn, Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, JoinTable, ManyToOne, CreateDateColumn } from "typeorm";
 import { Tag } from './tag';
 import { User } from "./user";
 
@@ -23,7 +23,7 @@ export class Document extends BaseEntity {
     @Column({ nullable: true })
     note?: string;
 
-    @ManyToOne(type => User, user => user.documents, {nullable: false})
+    @ManyToOne(type => User, user => user.documents, { nullable: false })
     user: User;
 
     @ManyToMany(type => Tag, tag => tag.documents)
@@ -33,14 +33,8 @@ export class Document extends BaseEntity {
     @Column({ nullable: true })
     mimeType?: string;
 
-    /* CRYPT: @Column({
-        type: 'varchar',
-        length: 16
-    })
-    iv: string;*/
-
     // OCR
-     @Column({ nullable: true, default: false })
+    @Column({ nullable: true, default: false })
     ocrEnabled?: boolean;
 
     @Column({ nullable: true, default: false })

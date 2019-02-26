@@ -31,21 +31,17 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         const userId = getUserIDFromJWT(req.headers.token.toString());
         const user = await User.findOne({ where: { id: userId }});
         const nextPrimaryNumber = await getNewPrimaryNumber();
-        // CRYPT: const iv = makeRandomString(16);
 
         const requestBody: IRequestBody = req.body;
         const file: Express.Multer.File = req.file;
-        console.log('single:',req.body);
 
         const document: Document = new Document();
         document.primaryNumber = nextPrimaryNumber;
         document.secondaryNumber = 0;
 
-        // Early saving, so we can access the "id" and the "primaryNumber" is reserved
         document.title = requestBody.title;
         document.note = requestBody.note;
         document.user = user;
-        // CRYPT: document.iv = iv;
         document.mimeType = file.mimetype;
         document.ocrEnabled = false;
         document.ocrFinished = false;
@@ -53,8 +49,7 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         document.fileExtension = extractFileExtension(req.file.originalname);
 
         // Setting up TAGs
-        //let documentTags = await document.tags;
-        const givenTags: Array<IRequestTag|number> = JSON.parse(requestBody.tags); // Can be like IRequestTag to create new tag or just an ID of existing tag
+        const givenTags: Array<IRequestTag|number> = JSON.parse(requestBody.tags);
         if(givenTags != null) {
             for (const tag of givenTags) {
                 if(typeof tag == "number") {
@@ -66,9 +61,6 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
                     let newTag = new Tag();
                     console.log("debug-tag=" + JSON.stringify(tag));
                     newTag.name = tag.name;
-                    /*newTag.logo = tag.logo;
-                    newTag.colorBackground = tag.colorBackground;
-                    newTag.colorForeground = tag.colorForeground;*/
                     if(tag.logo != null) {
                         newTag.logo = tag.logo;
                     }

@@ -10,6 +10,7 @@ export default async function getDocumentFile(req: any, res: any) {
     }
 
     const doc: Document = await Document.findOne({ where: { uid: docID }});
-    const docFile = fs.readFileSync(generateFilePath(doc));
+    const filepath = generateFilePath(doc);
+    const docFile = fs.readFileSync(filepath);
     res.status(200).send(docFile);
 }

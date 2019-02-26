@@ -23,7 +23,7 @@ export class Tag extends BaseEntity {
     @ManyToMany(type => Document, document => document.tags)
     documents: Document[];
 
-    @ManyToOne( type => User, user => user.tags, {nullable: false})
+    @ManyToOne( type => User, user => user.tags, { nullable: false })
     user: User;
 
 }
