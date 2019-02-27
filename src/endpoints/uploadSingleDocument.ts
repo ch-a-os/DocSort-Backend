@@ -51,6 +51,7 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         // Setting up TAGs
         const givenTags: Array<IRequestTag|number> = JSON.parse(requestBody.tags);
         if(givenTags != null) {
+            document.tags = new Array();
             for (const tag of givenTags) {
                 if(typeof tag == "number") {
                     let existingTag = await Tag.findOne({ where: { id: tag }});

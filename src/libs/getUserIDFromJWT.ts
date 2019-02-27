@@ -6,5 +6,5 @@ import * as jwt from 'jsonwebtoken';
  */
 export function getUserIDFromJWT(jsonwebtoken: string): number {
     const decoded = jwt.decode(jsonwebtoken, {complete: true, json: true});
-    return decoded['userID'];
+    return decoded['payload'].id;
 }
