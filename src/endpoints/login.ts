@@ -18,6 +18,12 @@ export default async function login(req: Request, res: Response) {
             username: username
         }
     })
+
+    if(user == null) {
+        res.status(404).send();
+        return;
+    }
+
     const hashedPassword = await createPasswordHash(password, user.salt);
     if(user.password == hashedPassword) {
         console.log(`User ${username} is now logged in.`);
@@ -30,6 +36,9 @@ export default async function login(req: Request, res: Response) {
         res.status(200).send({
             jwt: jsonWebToken
         });
+        return;
+    } else {
+        res.status(404).send();
         return;
     }
     res.status(401).send();
