@@ -84,6 +84,7 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         fs.writeFileSync(filePath, req.file.buffer);
         
         console.log(`file written: ${filePath}`);
+        await wait(4000);
         res.status(200).send({
             newID: document.uid
         });
@@ -91,4 +92,10 @@ export default async function uploadSingleDocument(req: Request, res: Response) 
         res.status(500).send({message: "Please see console output for error message."});
         console.error(err);
     }
+}
+
+async function wait(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
 }
